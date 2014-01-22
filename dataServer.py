@@ -44,6 +44,13 @@ class CDataServer(object):
 		self.dataServerInstance = dataServerApi.CDataServerApi(self.DataServer_HOST,self.DataServer_PORT)
 		self.dataServerInstance.init(self)
 		self.dataServerInstance.connectServer()
+		self.dataServerInstance.requestData(
+			self.REQUEST_TYPE,
+			self.REQUEST_FLAG,
+			datetime.datetime.strptime(self.START_TIME,"%Y-%m-%d %H:%M:%S"),
+			datetime.datetime.strptime(self.END_TIME,"%Y-%m-%d %H:%M:%S"))
+	#-----------------------
+	#链接触发
 	#链接初始化
 	def initLink(self, linkPara):
 		self.subStocks.extend(linkPara["subStocks"])
@@ -134,6 +141,3 @@ class CDataServer(object):
 		self.listenerDict[mainIF]	= newListener
 		#订阅股票
 		self.dataServerInstance.subscibeStock(self.SUB_ALL_STOCK, self.subStocks)
-		print self.listenerDict
-		import time
-		time.sleep(30)

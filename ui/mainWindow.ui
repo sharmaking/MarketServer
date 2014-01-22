@@ -47,7 +47,7 @@
     <item>
      <widget class="QGroupBox" name="groupBox_2">
       <property name="title">
-       <string>日期</string>
+       <string>信号日志</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -61,7 +61,6 @@
         <widget class="QListWidget" name="listWidget_3"/>
        </item>
       </layout>
-      <zorder>groupBox_3</zorder>
       <zorder>listWidget_3</zorder>
       <zorder>label_3</zorder>
      </widget>
@@ -114,13 +113,6 @@
          </size>
         </property>
        </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton">
-        <property name="text">
-         <string>连接服务器</string>
-        </property>
-       </widget>
       </item>
      </layout>
     </item>
