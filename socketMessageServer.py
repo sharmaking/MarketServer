@@ -16,15 +16,18 @@ class NoticeRequesHandler(SocketServer.BaseRequestHandler):
 	def recvSubscibeRespond(self):
 		bufferData = ""
 		while 1:
-			recvData = self.request.recv(1024)
-			#如果缓冲没有数据
-			if not bufferData:
-				bufferData = recvData
-			else: #继续缓冲数据
-				bufferData = bufferData + recvData
-			#接收数据完整，处理缓冲数据
-			if self.checkBufferDataIsComplete(bufferData):
-				bufferData = self.handleBufferData(bufferData)			
+			try:	#尝试接收数据
+				recvData = self.request.recv(1024)
+				#如果缓冲没有数据
+				if not bufferData:
+					bufferData = recvData
+				else: #继续缓冲数据
+					bufferData = bufferData + recvData
+				#接收数据完整，处理缓冲数据
+				if self.checkBufferDataIsComplete(bufferData):
+					bufferData = self.handleBufferData(bufferData)	
+			except Exception:
+				pass
 	#判断数据是否接收完整
 	def checkBufferDataIsComplete(self, bufferData):
 		if len(bufferData)>8:

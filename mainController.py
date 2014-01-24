@@ -42,6 +42,12 @@ class CMainController(object):
 		self.linkObjDict[linkPara["macAddress"]] =linkPara
 		self.strategyServer.initLink(linkPara)
 		self.QMain.showMessageClientJoinUp(linkPara)
+	#断开连接
+	def linkOffLine(self, macAddress):
+		self.QMain.showLinkOffLine(macAddress)
+		del self.linkObjDict[macAddress]
+		for stockCode, listenerObj in self.strategyServer.listenerDict.items():
+			del listenerObj.linkParaDict[macAddress]
 	#显示主窗口
 	def showMainWindow(self):
 		app = QtGui.QApplication(sys.argv)

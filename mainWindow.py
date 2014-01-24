@@ -57,3 +57,11 @@ class QMainWindow(QtGui.QMainWindow):
 			self.strategy_listWidget.addItem(x)
 		for x in self.linkObjDict[macAddress]["subMultiples"]:
 			self.strategy_listWidget.addItem(x)
+	#显示连接断开
+	def showLinkOffLine(self, macAddress):
+		self.addLog(u"%s 断开服务器"%self.linkObjDict[macAddress]["IPAddress"][0])
+		for item in self.link_listWidget.findItems(macAddress, QtCore.Qt.MatchFlags(3)):
+			 self.link_listWidget.takeItem(self.link_listWidget.row(item)) 
+		while self.strategy_listWidget.count():
+			self.strategy_listWidget.takeItem(0)
+		del self.linkObjDict[macAddress]
