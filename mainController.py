@@ -41,6 +41,7 @@ class CMainController(object):
 	def registerLink(self, linkPara):
 		self.linkObjDict[linkPara["macAddress"]] =linkPara
 		self.strategyServer.initLink(linkPara)
+		self.QMain.showMessageClientJoinUp(linkPara)
 	#显示主窗口
 	def showMainWindow(self):
 		app = QtGui.QApplication(sys.argv)

@@ -1,13 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import dataServerContoller
-import mainWindow
+import mainController
 
 def main():
-	mainController = dataServerContoller.CDataServerContoller()
-	#窗口显示
-	mainWindow.main(mainController)
-	pass
+	mainControllerInstance = mainController.CMainController()
 
 if __name__ == '__main__':
 	main()

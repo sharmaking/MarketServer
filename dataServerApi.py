@@ -8,10 +8,12 @@ class CDataServerApi(CDataApi):
 	#初始化接口
 	def init(self, controller):
 		self.controller = controller
-		self.preDateTime = 0
+		self.currentMarketDateTime = datetime.datetime(1990,1,1,0,0,0)
+		self.preDateTime = datetime.datetime(1990,1,1,0,0,0)
 		self.mainIF = ""
 	#数据接收接口
 	def onRtnDepthMarketData(self, dataType, data):
+		self.currentMarketDateTime = data["dateTime"]
 		self.controller.bufferStack[data["stockCode"][:6]].append((dataType,data))
 		if self.controller.bufferStack.has_key("Multiple"):
 			if dataType == 3 or dataType == 4 or dataType == 5:
@@ -29,8 +31,6 @@ class CDataServerApi(CDataApi):
 	#------------------------
 	#获取当然主力合约
 	def getMainIF(self, dateTime):
-		if not self.preDateTime:
-			self.preDateTime = dateTime
 		if dateTime.date() != self.preDateTime.date():
 			self.calculateMainIF(dateTime)
 		self.preDateTime = dateTime

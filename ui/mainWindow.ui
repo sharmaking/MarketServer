@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>623</width>
+    <width>692</width>
     <height>339</height>
    </rect>
   </property>
@@ -29,7 +29,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QListWidget" name="listWidget"/>
+        <widget class="QListWidget" name="link_listWidget"/>
        </item>
        <item>
         <widget class="QLabel" name="label">
@@ -39,7 +39,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QListWidget" name="listWidget_2"/>
+        <widget class="QListWidget" name="strategy_listWidget"/>
        </item>
       </layout>
      </widget>
@@ -58,10 +58,10 @@
         </widget>
        </item>
        <item>
-        <widget class="QListWidget" name="listWidget_3"/>
+        <widget class="QListWidget" name="log_listWidget"/>
        </item>
       </layout>
-      <zorder>listWidget_3</zorder>
+      <zorder>log_listWidget</zorder>
       <zorder>label_3</zorder>
      </widget>
     </item>
@@ -75,12 +75,15 @@
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="lcdNumber">
+       <widget class="QLCDNumber" name="marketTime_LCD">
         <property name="minimumSize">
          <size>
-          <width>100</width>
-          <height>50</height>
+          <width>150</width>
+          <height>40</height>
          </size>
+        </property>
+        <property name="numDigits">
+         <number>8</number>
         </property>
        </widget>
       </item>
@@ -92,12 +95,15 @@
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="lcdNumber_2">
+       <widget class="QLCDNumber" name="localTime_LCD">
         <property name="minimumSize">
          <size>
-          <width>100</width>
-          <height>50</height>
+          <width>150</width>
+          <height>40</height>
          </size>
+        </property>
+        <property name="numDigits">
+         <number>8</number>
         </property>
        </widget>
       </item>
@@ -124,7 +130,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>623</width>
+     <width>692</width>
      <height>23</height>
     </rect>
    </property>

@@ -24,7 +24,7 @@ class NoticeRequesHandler(SocketServer.BaseRequestHandler):
 				bufferData = bufferData + recvData
 			#接收数据完整，处理缓冲数据
 			if self.checkBufferDataIsComplete(bufferData):
-				bufferData = self.handleBufferData(bufferData)
+				bufferData = self.handleBufferData(bufferData)			
 	#判断数据是否接收完整
 	def checkBufferDataIsComplete(self, bufferData):
 		if len(bufferData)>8:
