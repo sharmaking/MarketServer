@@ -17,10 +17,15 @@ class CDataListener(threading.Thread):
 		self.signalObjDict = {}		#单股票策略对象列表
 		self.multipleObjDict = {}	#多合约策略对象列表
 	#----------------------------
-	#获得连接对象
+	#连接对象
 	#----------------------------
+	#获得连接对象
 	def getLinkPara(self, linkPara):
 		self.linkParaDict[linkPara["macAddress"]] = linkPara
+	#发送信号
+	def sendMessage(self, strategyName, messageStr):
+		for macAddress, linkObj in self.linkParaDict.items():
+			linkObj["RequesHandler"].sendMessage(self.stockCode, strategyName, messageStr)
 	#----------------------------
 	#获得策略对象
 	#----------------------------

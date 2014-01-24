@@ -58,10 +58,3 @@ class CMainController(object):
 		#显示主窗口
 		self.QMain.show()
 		sys.exit(app.exec_())
-
-
-def main():
-	test = CMainController()
-
-if __name__ == '__main__':
-	main()

@@ -12,6 +12,8 @@ class NoticeRequesHandler(SocketServer.BaseRequestHandler):
 		print '...connected from:', self.client_address
 		self.recvSubscibeRespond()
 	#--------------------
+	#接收数据
+	#--------------------
 	#监听socket缓存
 	def recvSubscibeRespond(self):
 		bufferData = ""
@@ -56,10 +58,19 @@ class NoticeRequesHandler(SocketServer.BaseRequestHandler):
 		if dataType == 0:
 			self.fomartRegisterPara(bufferData[8:])
 	def fomartRegisterPara(self, registerPara):
-		linkPara = eval(registerPara)
-		linkPara["IPAddress"] = self.client_address
-		linkPara["RequesHandler"] = self
-		self.mainController.registerLink(linkPara)
+		self.linkPara = eval(registerPara)
+		self.linkPara["IPAddress"] = self.client_address
+		self.linkPara["RequesHandler"] = self
+		self.mainController.registerLink(self.linkPara)
+	#--------------------
+	#发送数据数据
+	#--------------------
+	def sendMessage(self, stockCode, strategyName, messageStr):
+		self.mainController.QMain.addLog(u"%s %s 向客户端 %s 发送信号 %s"%(strategyName,stockCode,self.client_address,messageStr))
+		try:
+			self.request.sendall("%s %s"%(stockCode, messageStr))
+		except Exception:
+			self.mainController.linkOffLine(self.linkPara["macAddress"])	
 
 class CSocketMessageServer(threading.Thread):
 	def __init__(self, Host, Port, mainController):

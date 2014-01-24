@@ -48,7 +48,10 @@ class CBaseStrategy(object):
 			self.autosaveCache()
 			#self.saveCache(MDList = self.MDList, TDList = self.TDList, ODList = self.ODList)
 	#------------------------------
-
+	#发送信号
+	#------------------------------
+	def sendMessageToClient(self, messageStr):
+		self.controller.listenerDict[self.stockCode].sendMessage(self.name, messageStr)
 	#------------------------------
 	#cache 相关函数
 	#------------------------------
