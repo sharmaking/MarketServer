@@ -31,7 +31,7 @@ def main():
 	registerPara = {
 		"macAddress"	: macAddress,
 		"subStocks"		: ["999999", "300238"],
-		"subSignals"	: ["SQTSignal"],
+		"subSignals"	: ["baseSignal"],
 		"subMultiples"	: []
 	}	
 

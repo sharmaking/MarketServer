@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # mainWindow.py
 from PyQt4 import QtGui, QtCore, uic
+import datetime
 
 class QMainWindow(QtGui.QMainWindow):
 	def __init__(self):
@@ -30,6 +31,15 @@ class QMainWindow(QtGui.QMainWindow):
 	#添加日志日志
 	def addLog(self, logStr):
 		self.log_listWidget.addItem(logStr)
+		if self.log_listWidget.count() > 100:
+			self.log_listWidget.takeItem(0)
+		self.saveLog(logStr)
+	#保存日志
+	def saveLog(self, logStr):
+		logFile = open("log.log", "a")
+		content = "%s %s\n"%(str(datetime.datetime.now()), logStr.encode('gb2312'))
+		logFile.write(content)
+		logFile.close()
 	#显示连接接入
 	def showMessageClientJoinUp(self, linkPara):
 		if not self.linkObjDict.has_key(linkPara["macAddress"]):
@@ -38,7 +48,7 @@ class QMainWindow(QtGui.QMainWindow):
 			self.link_listWidget.addItem(messageItem)
 			self.showSubStrategy(linkPara["macAddress"])
 		self.linkObjDict[linkPara["macAddress"]] =linkPara
-		self.addLog(u"%s信号客户端连入服务器"%linkPara["IPAddress"][0])
+		self.addLog(u"%s 信号客户端连入服务器"%linkPara["IPAddress"][0])
 	#显示订阅策略
 	def showSubStrategy(self, macAddress):
 		while self.strategy_listWidget.count():
