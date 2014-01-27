@@ -13,8 +13,8 @@ class QMainWindow(QtGui.QMainWindow):
 	#初始化窗口布局
 	def initUI(self):
 		uic.loadUi('ui/mainWindow.ui', self)
-		self.setWindowTitle(u'信号客户端')
-		self.statusBar().showMessage(u'正在连接服务器')
+		self.setWindowTitle(u'策略服务端客户端')
+		self.statusBar().showMessage(u'已连接数据服务器')
 	def initEventConnection(self):
 		self.link_listWidget.itemDoubleClicked.connect(self.showSubStrategyByClick)
 	#切换选择链接订阅策略

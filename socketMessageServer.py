@@ -66,7 +66,7 @@ class NoticeRequesHandler(SocketServer.BaseRequestHandler):
 	#发送数据数据
 	#--------------------
 	def sendMessage(self, stockCode, strategyName, messageStr):
-		self.mainController.QMain.addLog(u"%s %s 向客户端 %s 发送信号 %s"%(strategyName,stockCode,self.client_address,messageStr))
+		self.mainController.QMain.addLog(u"%s %s 向客户端 %s 发送信号:%s"%(strategyName,stockCode,self.client_address,messageStr))
 		try:
 			self.request.sendall("%s %s"%(stockCode, messageStr))
 		except Exception:

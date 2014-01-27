@@ -15,13 +15,13 @@ class CBaseSignal(baseStrategy.CBaseStrategy):
 	#行情数据触发函数
 	def onRtnMarketData(self, data):
 		#self.sendMessageToClient("onRtnMarketData")
-		print self.name, "onRtnMarketData", self.stockCode, len(data)
+		pass #print self.name, "onRtnMarketData", self.stockCode, len(data)
 	#逐笔成交触发函数
 	def onRtnTradeSettlement(self, data):
-		print self.name, "onRtnTradeSettlement", self.stockCode, len(data)
+		pass #print self.name, "onRtnTradeSettlement", self.stockCode, len(data)
 	#买一队列触发函数
 	def onRtnOrderQueue(self, data):
-		print self.name, "onRtnOrderQueue", self.stockCode, len(data)
+		pass #print self.name, "onRtnOrderQueue", self.stockCode, len(data)
 	def dayBegin(self):
 		pass
 	def dayEnd(self):

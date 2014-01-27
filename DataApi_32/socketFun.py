@@ -235,6 +235,6 @@ def recvSubscibeRespond(socketLink, num):
 				bufferData = handleBufferData(bufferData)
 			g_socketLink.connectState = True
 		except Exception:	#断线重连
-			print "socket.error: [Error 10054]"
+			print "socketFun recvSubscibeRespond: socket.error: [Error 10054]"
 			g_socketLink.connectState = False
 		
