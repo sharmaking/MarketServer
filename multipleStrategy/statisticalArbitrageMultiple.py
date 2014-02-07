@@ -25,19 +25,19 @@ class CStatisticalArbitrageMultiple(baseMultiple.CBaseMultiple):
 			"price"		: [0,0],
 			"S"			: []
 			})
-		#self.parameters.append({
-		#	"stocks"	: ["600648", "600663"],
-		#	"Beta"		: 1.26784,
-		#	"Mean"		: -0.08965,
-		#	"STD"		: 0.038629,
-		#	"OPEN"		: 1.1,
-		#	"CLOSE"		: 0.06,
-		#	"ODD"		: 2.5,
-		#	"staute"	: 0,
-		#	"tradeType"	: [None, None],
-		#	"price"		: [0,0],
-		#	"S"			: []
-		#	})
+		self.parameters.append({
+			"stocks"	: ["600648", "600663"],
+			"Beta"		: 1.26784,
+			"Mean"		: -0.08965,
+			"STD"		: 0.038629,
+			"OPEN"		: 1.1,
+			"CLOSE"		: 0.06,
+			"ODD"		: 2.5,
+			"staute"	: 0,
+			"tradeType"	: [None, None],
+			"price"		: [0,0],
+			"S"			: []
+			})
 
 	#行情数据触发函数
 	def onRtnMarketData(self, data):
@@ -63,6 +63,7 @@ class CStatisticalArbitrageMultiple(baseMultiple.CBaseMultiple):
 				St = numpy.log(Pa) - parameter["Beta"]*numpy.log(Pb)
 				S = (St - parameter["Mean"])/parameter["STD"]
 				parameter["S"].append((data["dateTime"], S))
+				self.sendS(S, parameter["stocks"][0])
 				self.countTrade(parameter, S)
 				parameter["price"] = [Pa, Pb]
 	def getStockPrice(self, stockCode):
@@ -88,32 +89,38 @@ class CStatisticalArbitrageMultiple(baseMultiple.CBaseMultiple):
 					self.stopLossTrade(parameter)
 		if S > parameter["ODD"] or S < -parameter["ODD"]:
 			pass
+	def sendS(self, S, stockCode):
+		self.sendMessageToClient(u"0_%s_%s"%(stockCode, str(S)[:6]))
 	def openTrade(self, parameter, isTrue):
 		parameter["staute"] = 1
 		if isTrue:		#正
 			parameter["tradeType"] = ["Sell", "Buy"]
 		else:			#反
 			parameter["tradeType"] = ["Buy", "Sell"]
-		self.sendMessageToClient(u"开仓：%s %s %s, %s %s %s"%(
+		self.sendMessageToClient(u"1_%s_开仓：%s %s %s, %s %s %s"%(
+			parameter["stocks"][0],
 			parameter["stocks"][0], parameter["tradeType"][0],parameter["price"][0],
 			parameter["stocks"][1], parameter["tradeType"][1],parameter["price"][1]))
 		print u"开仓：%s %s %s, %s %s %s"%(
 			parameter["stocks"][0], parameter["tradeType"][0],parameter["price"][0],
 			parameter["stocks"][1], parameter["tradeType"][1],parameter["price"][1])
 	def closeTrade(self, parameter):
-		self.sendMessageToClient(u"平仓：%s %s %s, %s %s %s"%(
+		self.sendMessageToClient(u"1_%s_平仓：%s %s %s, %s %s %s"%(
+			parameter["stocks"][0],
 			parameter["stocks"][0], parameter["tradeType"][1],parameter["price"][0],
 			parameter["stocks"][1], parameter["tradeType"][0],parameter["price"][1]))
 		parameter["staute"]		= 0
 		parameter["tradeType"]	= [None, None]
 	def stopLossTrade(self, parameter):
-		self.sendMessageToClient(u"止损：%s %s %s, %s %s %s"%(
+		self.sendMessageToClient(u"1_%s_止损：%s %s %s, %s %s %s"%(
+			parameter["stocks"][0],
 			parameter["stocks"][0], parameter["tradeType"][1],parameter["price"][0],
 			parameter["stocks"][1], parameter["tradeType"][0],parameter["price"][1]))
 		parameter["staute"]		= 0
 		parameter["tradeType"]	= [None, None]
 	def exceptionTrade(self, parameter):
-		self.sendMessageToClient(u"异常：%s %s %s, %s %s %s"%(
+		self.sendMessageToClient(u"1_%s_异常：%s %s %s, %s %s %s"%(
+			parameter["stocks"][0],
 			parameter["stocks"][0], parameter["tradeType"][1],parameter["price"][0],
 			parameter["stocks"][1], parameter["tradeType"][0],parameter["price"][1]))
 		parameter["staute"]		= 0

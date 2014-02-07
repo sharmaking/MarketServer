@@ -62,13 +62,25 @@ class NoticeRequesHandler(SocketServer.BaseRequestHandler):
 		self.linkPara["IPAddress"] = self.client_address
 		self.linkPara["RequesHandler"] = self
 		self.mainController.registerLink(self.linkPara)
+		#监视短线
+		self.watchLinkOutOffLine()
+	#监视断线
+	def watchLinkOutOffLine(self):
+		import time
+		while 1:
+			try:
+				self.request.sendall(" ")
+			except Exception:
+				self.mainController.linkOffLine(self.linkPara["macAddress"])		
+			time.sleep(40)
 	#--------------------
 	#发送数据数据
 	#--------------------
 	def sendMessage(self, stockCode, strategyName, messageStr):
-		self.mainController.QMain.addLog(u"%s %s 向客户端 %s 发送信号:%s"%(strategyName,stockCode,self.client_address,messageStr))
+		if messageStr[0] != "0":
+			self.mainController.QMain.addLog(u"%s %s 向客户端 %s 发送信号:%s"%(strategyName,stockCode,self.client_address,messageStr))
 		try:
-			self.request.sendall("%s %s"%(stockCode, messageStr))
+			self.request.sendall(messageStr.encode('gb2312'))
 		except Exception:
 			self.mainController.linkOffLine(self.linkPara["macAddress"])	
 

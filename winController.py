@@ -18,7 +18,6 @@ class QWindowsController(QtCore.QThread):
 		while True:
 			self.showMarketTime()
 			self.showLocalTime()
-			self.watchLinkOutOffLine()
 		self.terminate()
 	#显示行情时间
 	def showMarketTime(self):
@@ -30,13 +29,3 @@ class QWindowsController(QtCore.QThread):
 		localTime = datetime.datetime.now()
 		localTimeStr = localTime.strftime("%H:%M:%S")
 		self.QMain.showLocalTime(localTimeStr)
-	#监视链接断线
-	def watchLinkOutOffLine(self):
-		nowTime = datetime.datetime.now()
-		if (nowTime - self.preWatchTime).seconds > 10:
-			for macAddress, linkObj in self.mainController.linkObjDict.items():
-				try:
-					linkObj["RequesHandler"].request.sendall("T")
-				except Exception:
-					self.mainController.linkOffLine(macAddress)		
-			self.preWatchTime = nowTime
