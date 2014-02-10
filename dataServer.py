@@ -85,11 +85,11 @@ class CDataServer(object):
 				newListener.getLinkPara(linkPara)
 				newListener.start()
 				self.listenerDict["Multiple"]	= newListener
-			else:
-				strategyObjDict = self.creatStrategyObjectWhileBeConnected(False, stock, linkPara)
-				if strategyObjDict:
-					self.listenerDict[stock].getSignalStrategyObj(strategyObjDict)
-					self.listenerDict[stock].getLinkPara(linkPara)
+		else:
+			strategyObjDict = self.creatStrategyObjectWhileBeConnected(False, stock, linkPara)
+			if strategyObjDict:
+				self.listenerDict["Multiple"].getSignalStrategyObj(strategyObjDict)
+				self.listenerDict["Multiple"].getLinkPara(linkPara)
 	def creatStrategyObjectWhileBeConnected(self, needSignal, stock, linkPara):
 		strategyObjDict = {}
 		if needSignal:	#单合约策略

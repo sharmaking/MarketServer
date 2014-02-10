@@ -188,8 +188,16 @@ def resolveRecvData(bufferData):
 	#解析指数数据
 	elif dataType == 5:
 		resolveIndexMarketData(bufferData)
-	#解析历史数据
+	#解析历史数据	#五档行情
 	elif dataType == 6:
+		#print bufferData[8:]
+		pass
+	#解析历史数据	#日线
+	elif dataType == 7:
+		#print bufferData[8:]
+		pass
+	#解析历史数据	#三档行情
+	elif dataType == 8:
 		#print bufferData[8:]
 		pass
 	#结束标记
